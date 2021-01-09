@@ -19,9 +19,6 @@ private backupTask: Partial<Task> = {...this.data.task};
     this.data.task.description = this.backupTask.description;
     this.dialogRef.close(this.data);
   }
-
-
-
 }
 export interface TaskDialogData {
   task: Partial<Task>;
