@@ -1,8 +1,10 @@
-import { transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
 import { Task } from './task/task';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop'
-import {MatDialog, MAT_DIALOG_SCROLL_STRATEGY_FACTORY} from '@angular/material/dialog'
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {MatDialog} from '@angular/material/dialog';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import { TaskDialogResult} from './task-dialog/task-dialog.component';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
