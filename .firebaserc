@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "dragndrop-cf35a": {
+      "hosting": {
+        "Kanban": [
+          "dragndrop-cf35a"
+        ]
+      }
+    }
+  }
+}
