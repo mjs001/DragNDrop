@@ -12,7 +12,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  todo = this.store.collection('todo').valueChanges({ idField: 'id' });
+   todo = this.store.collection('todo').valueChanges({ idField: 'id' });
   inProgress = this.store.collection('inProgress').valueChanges({ idField: 'id' });
   done = this.store.collection('done').valueChanges({ idField: 'id' });
 
@@ -50,21 +50,23 @@ export class AppComponent {
   drop(event: CdkDragDrop<Task[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      const item = event.previousContainer.data[event.previousIndex];
+      this.store.firestore.runTransaction(() => {
+        const promise = Promise.all([
+          this.store.collection(event.previousContainer.id).doc(item.id).delete(),
+          this.store.collection(event.container.id).add(item),
+        ]);
+        return promise;
+      });
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
-    const item = event.previousContainer.data[event.previousIndex];
-    this.store.firestore.runTransaction(() => {
-      const promise = Promise.all([
-        this.store.collection(event.previousContainer.id).doc(item.id).delete(),
-        this.store.collection(event.container.id).add(item),
-      ]);
-      return promise;
-    });
-    transferArrayItem(
-      event.previousContainer.data,
-      event.container.data,
-      event.previousIndex,
-      event.currentIndex
-    );
+   
   }
 }
 
